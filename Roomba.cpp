@@ -135,6 +135,24 @@ void Roomba::leds(uint8_t leds, uint8_t powerColour, uint8_t powerIntensity)
   _serial->write(powerIntensity);
 }
 
+void Roomba::digitLedsRaw(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0)
+{
+  _serial->write(163);
+  _serial->write(digit3);
+  _serial->write(digit2);
+  _serial->write(digit1);
+  _serial->write(digit0);
+}
+
+void Roomba::digitLedsASCII(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0)
+{
+  _serial->write(164);
+  _serial->write(digit3);
+  _serial->write(digit2);
+  _serial->write(digit1);
+  _serial->write(digit0);
+}
+
 void Roomba::digitalOut(uint8_t out)
 {
   _serial->write(147);

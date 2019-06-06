@@ -460,6 +460,20 @@ public:
     /// \param[in] powerIntensity Power LED intensity. 0 to 255. 0 = off, 255 = full intensity
     void leds(uint8_t leds, uint8_t powerColour, uint8_t powerIntensity);
 
+    /// Controls the four 7 segment displays using bitmasks
+    /// Model series 600 and below only, newer models do not interpret parameters as bitmasks anymore, but
+    /// rather as lookup table entries
+    /// \param[in] Bitmask for the leftmost digit
+    /// \param[in] Bitmask for the second digit from the left
+    /// \param[in] Bitmask for the thrid digit from the left
+    /// \param[in] Bitmask for the rightmost digit
+    void digitLedsRaw(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0);
+
+    /// Controls the four 7 segment displays using ASCII character
+    /// \param[in] array of ASCII codes First element sets leftmost digit, last element sets rightmost digit
+    // Please refer to the OI spec to see all possible ASCII codes
+    void digitLedsASCII(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0);
+
     /// Sets the digital output pins on the Cargo Bay Connector of the Create
     /// Create only. No equivalent on Roomba.
     /// \param[in] out Mask specifiying which outputs to enable. ORed value ROOMBA_MASK_DIGITAL_OUT_*
