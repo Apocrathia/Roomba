@@ -1,4 +1,4 @@
-// TestSuite.pde
+// TestSuite.ino
 //
 // Test Suite for Roomba class
 //
