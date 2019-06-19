@@ -1,4 +1,4 @@
-// RoombaTest1.pde
+// RoombaTest1.ino
 //
 // Test for Roomba class
 // Tests reading of sensor data from a Create using the stream() command
