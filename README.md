@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/Apocrathia/Roomba.svg?branch=master)](https://travis-ci.org/Apocrathia/Roomba)
 [![Build Status](https://travis-ci.org/Apocrathia/Roomba.svg?branch=dev)](https://travis-ci.org/Apocrathia/Roomba)
 
-[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Apocrathia/home-assistant-config/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Apocrathia/home-assistant-config/branches/master)
-[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Apocrathia/home-assistant-config/branches/dev/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Apocrathia/home-assistant-config/branches/dev)
+[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Apocrathia/Roomba/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Apocrathia/Roomba/branches/master)
+[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Apocrathia/Roomba/branches/dev/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Apocrathia/Roomba/branches/dev)
 
 Roomba library for Arduino
 This is the Arduino **Roomba** library. It provides an object-oriented interface for talking to iRobot **Roomba** and Create robots via a serial port. The Roomba is the original device from iRobot. It has a serial port DIN socket on the side. The Create is a more full-featured robot platform for hobbyists. It has both the DIN socket and a DB25 connector called the CArgo Bay Connector
