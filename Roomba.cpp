@@ -283,10 +283,12 @@ bool Roomba::pollSensors(uint8_t* dest, uint8_t len)
 	    case PollStateIdle:
 		if (ch == 19)
 		    _pollState = PollStateWaitCount;
+                    _pollChecksum = ch;
 		break;
 
 	    case PollStateWaitCount:
-		_pollChecksum = _pollSize = ch;
+                _pollChecksum += ch;
+                _pollSize = ch;
 		_pollCount = 0;
 		_pollState = PollStateWaitBytes;
 		break;
@@ -295,7 +297,7 @@ bool Roomba::pollSensors(uint8_t* dest, uint8_t len)
 		_pollChecksum += ch;
 		if (_pollCount < len)
 		    dest[_pollCount] = ch;
-		if (_pollCount++ >= _pollSize)
+		if (++_pollCount >= _pollSize)
 		    _pollState = PollStateWaitChecksum;
 		break;
 
