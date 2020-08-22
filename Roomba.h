@@ -10,10 +10,10 @@
 /// The Create is a more full-featured robot platform for hobbyists. It has both the DIN socket and a DB25
 /// connector called the CArgo Bay Connector
 ///
-/// The Create understands a superset of the Roomba commands. This library supports both devices. Where 
+/// The Create understands a superset of the Roomba commands. This library supports both devices. Where
 /// comands are only available on one or the other platform it is noted.
 ///
-/// The version of the package that this documentation refers to can be downloaded 
+/// The version of the package that this documentation refers to can be downloaded
 /// from http://www.airspayce.com/mikem/arduino/Roomba/Roomba-1.3.zip
 /// You can find the latest version at http://www.airspayce.com/mikem/arduino/Roomba
 ///
@@ -24,7 +24,7 @@
 /// \li TestSuite Runs on a Mega and exercises a number of the functions, checking for correct operation
 /// \li RoombaTest1 Runs in any Arduino, checks that sensors can be read from Create using the stream() command
 /// \li RoombaRCRx Demo program that shows how to control a Create using the RCRx Arduino library,
-/// an Arduino WiFi shield such as BlackWidow and the RCTx 
+/// an Arduino WiFi shield such as BlackWidow and the RCTx
 /// iPhone app. Control a Create from your iPhone!
 ///
 /// A video domonstating this library (along with the http://www.airspayce.com/mikem/arduino/RCKit library)
@@ -32,11 +32,11 @@
 ///
 /// \par Installation
 /// Install in the usual way: unzip the distribution zip file to the libraries
-/// sub-folder of your sketchbook. 
+/// sub-folder of your sketchbook.
 ///
 /// This software is Copyright (C) 2010 Mike McCauley. Use is subject to license
 /// conditions. The main licensing options available are GPL V2 or Commercial:
-/// 
+///
 /// \par Open Source Licensing GPL V2
 /// This is the appropriate option if you want to share the source code of your
 /// application with everyone you distribute it to, and you also want to give them
@@ -44,7 +44,7 @@
 /// Source Licensing, you must contribute all your source code to the open source
 /// community in accordance with the GPL Version 2 when your application is
 /// distributed. See http://www.gnu.org/copyleft/gpl.html
-/// 
+///
 /// \par Commercial Licensing
 /// This is the appropriate option if you are creating proprietary applications
 /// and you are not prepared to distribute and share the source code of your
@@ -138,8 +138,8 @@
 /// \brief Support for iRobot Roomba and Create platforms via serial port using the iRobot Open Interface (OI)
 /// protocol.
 ///
-/// The iRobot Roomba and Create platforms support a serial port through which you can control and 
-/// interrogate the device. The protocol implemented here conforms to the Open Interface protocol described in the 
+/// The iRobot Roomba and Create platforms support a serial port through which you can control and
+/// interrogate the device. The protocol implemented here conforms to the Open Interface protocol described in the
 /// iRobot Open Interface Command Reference. Not all commands are supported on both platforms. Differences are
 /// noted in the API
 ///
@@ -148,28 +148,28 @@
 /// pins on the Cargo Bay Connector include the serial port, battery, digital inputs and
 /// outputs, and an analog input.
 ///
-/// In order to communicate with a Roomba, you must create an instance of the Roomba class and then call its 
-/// instance methods to send commmands and receive sensor messages. You can also request continuous 
-/// streams of sensor data to be sent by the Roomba. The Roomba also emits messages on its 
+/// In order to communicate with a Roomba, you must create an instance of the Roomba class and then call its
+/// instance methods to send commmands and receive sensor messages. You can also request continuous
+/// streams of sensor data to be sent by the Roomba. The Roomba also emits messages on its
 /// serial port from time to time as described below.
 ///
 /// \par Electrical Considerations
 ///
-/// The serial port output TXD from the Roomba/Create is too weak to drive the RX serial port input 
+/// The serial port output TXD from the Roomba/Create is too weak to drive the RX serial port input
 /// of an Arduino properly.
 /// This is because of the USB-Serial converter on the Arduino: it also tries to drive the RX serial port input
-/// via a pullup resistor, 
-/// but the Roomba does not have enough drive to pull the RX down below about 2.5 volts, which is insufficient 
+/// via a pullup resistor,
+/// but the Roomba does not have enough drive to pull the RX down below about 2.5 volts, which is insufficient
 /// to be reliably detected as a TTL serial input of 0.
 ///
-/// \note Note that this problem does not affect the Serial1 Serial2 or Serial3 ports on the Mega: these ports do not 
-/// have other circuitry connected to them and the Roomba can drive the serial port inputs of these ports 
-/// without a problem. Its only the RX Serial port (ie the first Serial port) that is affected by this problem. 
+/// \note Note that this problem does not affect the Serial1 Serial2 or Serial3 ports on the Mega: these ports do not
+/// have other circuitry connected to them and the Roomba can drive the serial port inputs of these ports
+/// without a problem. Its only the RX Serial port (ie the first Serial port) that is affected by this problem.
 ///
-/// What this means is that if you intend to connect a Roomba to the standard (first) RX/TX serial port on an Arduino 
-/// you \a MUST have additional circuitry to help drive RX on the Arduino low enough. 
+/// What this means is that if you intend to connect a Roomba to the standard (first) RX/TX serial port on an Arduino
+/// you \a MUST have additional circuitry to help drive RX on the Arduino low enough.
 /// We use a simple PNP emitter follower. Almost any small signal low power PNP will do.
-/// See the <a href="Create-Arduino.pdf">example circuit diagram</a>. This will ensure the RX serial 
+/// See the <a href="Create-Arduino.pdf">example circuit diagram</a>. This will ensure the RX serial
 /// port input on the Arduino is pulled down to about 0.6V for reliable comms.
 ///
 /// \par Other Roomba messages
@@ -177,22 +177,22 @@
 /// When iRobot Create powers up and after a reset, it sends a message like this on its serial port:
 /// \code
 /// bl-start
-/// 2006-09-12-1137-L   
+/// 2006-09-12-1137-L
 /// RDK by iRobot!
 /// MC9S12E128
-/// 2006-11-20-1731-L   
+/// 2006-11-20-1731-L
 /// battery-current-quiescent-raw 524  battery-current-zero 510
-/// 
-/// 2006-11-20-1731-L   
+///
+/// 2006-11-20-1731-L
 /// \endcode
 ///
 /// While charging it will send a message like this each second:
 /// \code
-/// bat:   min 3  sec 21  mV 15558  mA 1491  deg-C 24  
+/// bat:   min 3  sec 21  mV 15558  mA 1491  deg-C 24
 /// \endcode
 ///
-/// To enter the factory test menu for the IRobot Create, hold down the (>) and (>>|) 
-/// buttons then press and hold the Power button until the assending and descending tones play and then stop. 
+/// To enter the factory test menu for the IRobot Create, hold down the (>) and (>>|)
+/// buttons then press and hold the Power button until the assending and descending tones play and then stop.
 /// You wil see some messages emitted on teh serial port.
 /// Press the right-right arrow button to cycle through the tests.
 ///
@@ -216,7 +216,7 @@ public:
 	Baud57600  = 10,
 	Baud115200 = 11,
     } Baud;
-    
+
     /// \enum Demo
     /// Demo types to pass to Roomba::demo()
     typedef enum
@@ -233,7 +233,7 @@ public:
 	DemoPachelbel = 8,
 	DemoBanjo = 9,
     } Demo;
-    
+
     /// \enum Drive
     /// Special values for radius in Roomba::drive()
     typedef enum
@@ -242,15 +242,15 @@ public:
 	DriveInPlaceClockwise        = 0xFFFF,
 	DriveInPlaceCounterClockwise = 0x0001,
     } Drive;
-  
+
     /// \enum StreamCommand
     /// Values to pass to Roomba::streamCommand()
     typedef enum
     {
-	StreamCommandPause  = 0,  
+	StreamCommandPause  = 0,
 	StreamCommandResume = 1,
     } StreamCommand;
-  
+
     /// \enum EventType
     /// Values to pass to Roomba::waitEvent()
     typedef enum
@@ -274,11 +274,11 @@ public:
 	EventTypePlayButton      = 17,
 	EventTypeDigitalInput0   = 18,
 	EventTypeDigitalInput1   = 19,
-	EventTypeDigitalInput2   = 20,  
+	EventTypeDigitalInput2   = 20,
 	EventTypeDigitalInput3   = 21,
 	EventTypeModePassive     = 22,
     } EventType;
-  
+
     /// \enum IRCommand
     /// Values for sensor packet ID 27
     typedef enum
@@ -303,14 +303,14 @@ public:
 	// Home Base:
 	IRCommandReserved1              = 240,
 	IRCommandRedBuoy                = 248,
-	IRCommandGreenBuoy              = 244, 
+	IRCommandGreenBuoy              = 244,
 	IRCommandForceField             = 242,
 	IRCommandRedGreenBuoy           = 252,
 	IRCommandRedBuoyForceField      = 250,
 	IRCommandGreenBuoyForceField    = 246,
 	IRCommandRedGreenBuoyForceField = 254,
     } IRCommand;
-  
+
     /// \enum ChargeState
     /// Values for sensor packet ID 21
     typedef enum
@@ -322,7 +322,7 @@ public:
 	ChargeStateWaiting                = 4,
 	ChargeStateFault                  = 5,
     } ChargeState;
-  
+
     /// \enum Mode
     /// Values for sensor packet ID 35
     typedef enum
@@ -332,7 +332,7 @@ public:
 	ModeSafe    = 2,
 	ModeFull    = 3,
     } Mode;
-  
+
     /// \enum Sensor
     /// Values for sensor packet IDs to pass to getSensors() and getSensorsList()
     typedef enum
@@ -381,23 +381,29 @@ public:
 	SensorRightVelocity            = 41,
 	SensorLeftVelocity             = 42,
     } Sensor;
-  
+
     /// Constructor. You can have multiple simultaneous Roomba if that makes sense.
-    /// \param[in] serial POinter to the HardwareSerial port to use to communicate with the Roomba. 
+    /// \param[in] serial POinter to the HardwareSerial port to use to communicate with the Roomba.
     /// Defaults to &Serial
     /// \param[in] baud the baud rate to use on the serial port. Defaults to 57600, the default for the Roomba.
-    Roomba(HardwareSerial* serial = &Serial, Baud baud = Baud57600);
+    #ifdef HAVE_HWSERIAL0
+      Roomba(HardwareSerial* serial = &Serial, Baud baud = Baud57600);
+    #elif defined HAVE_HWSERIAL1
+      Roomba(HardwareSerial* serial = &Serial1, Baud baud = Baud57600);
+    #else
+      Roomba(Serial_* serial = &serial, Baud baud = Baud57600);
+    #endif
 
-    /// Resets the Roomba. 
+    /// Resets the Roomba.
     /// It will emit its startup message
     /// Caution, this may take several seconds to complete
     void reset();
 
-    /// Starts the Open Interface and sets the mode to Passive. 
+    /// Starts the Open Interface and sets the mode to Passive.
     /// You must send this before sending any other commands.
     /// Initialises the serial port to the baud rate given in the constructor
     void start();
-    
+
     /// Converts the specified baud code into a baud rate in bits per second
     /// \param[in] baud Baud code, one of Roomba::Baud
     /// \return baud rate in bits per second
@@ -420,7 +426,7 @@ public:
     /// Roomba only, no equivalent for Create.
     void power();
 
-    /// Causes roomba to immediately 
+    /// Causes roomba to immediately
     /// seek the docking station.
     /// No equivalent for Create.
     void dock();
@@ -440,10 +446,10 @@ public:
     /// Starts the Spot Cover demo
     /// Changes mode to Passive
     void spot();
-	
+
     /// Starts the Roomba driving with a specified wheel velocity and radius of turn
     /// \param[in] velocity Speed in mm/s (-500 to 500 mm/s)
-    /// \param[in] radius Radius of the turn in mm. (-2000 to 2000 mm). 
+    /// \param[in] radius Radius of the turn in mm. (-2000 to 2000 mm).
     /// Any of the special values in enum Roomba::Drive may be used instead of a radius value
     void drive(int16_t velocity, int16_t radius);
 
@@ -455,10 +461,24 @@ public:
 
     /// Controls the LEDs on the Create
     /// \param[in] leds Bitmask specifying which LEDs to activate. ORed combination of ROOMBA_MASK_LED_*
-    /// \param[in] powerColour The colour of the Power LED. 0 to 255. 0 = green, 255 = red, 
+    /// \param[in] powerColour The colour of the Power LED. 0 to 255. 0 = green, 255 = red,
     /// intermediate values are intermediate colours
     /// \param[in] powerIntensity Power LED intensity. 0 to 255. 0 = off, 255 = full intensity
     void leds(uint8_t leds, uint8_t powerColour, uint8_t powerIntensity);
+
+    /// Controls the four 7 segment displays using bitmasks
+    /// Model series 600 and below only, newer models do not interpret parameters as bitmasks anymore, but
+    /// rather as lookup table entries
+    /// \param[in] Bitmask for the leftmost digit
+    /// \param[in] Bitmask for the second digit from the left
+    /// \param[in] Bitmask for the thrid digit from the left
+    /// \param[in] Bitmask for the rightmost digit
+    void digitLedsRaw(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0);
+
+    /// Controls the four 7 segment displays using ASCII character
+    /// \param[in] array of ASCII codes First element sets leftmost digit, last element sets rightmost digit
+    // Please refer to the OI spec to see all possible ASCII codes
+    void digitLedsASCII(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0);
 
     /// Sets the digital output pins on the Cargo Bay Connector of the Create
     /// Create only. No equivalent on Roomba.
@@ -471,21 +491,21 @@ public:
     /// \param[in] dutyCycle0 Duty cycle for low side driver 0. 0 to 128.
     /// \param[in] dutyCycle1 Duty cycle for low side driver 1. 0 to 128.
     /// \param[in] dutyCycle2 Duty cycle for low side driver 2. 0 to 128.
-    void pwmDrivers(uint8_t dutyCycle0, uint8_t dutyCycle1, uint8_t dutyCycle2); 
+    void pwmDrivers(uint8_t dutyCycle0, uint8_t dutyCycle1, uint8_t dutyCycle2);
 
     /// Sets the low side drivers on or off. On the Romba, these control the 3 motors.
     /// \param[in] out Bitmask of putputs to enable. ORed value ROOMBA_MASK_DRIVER_*
     void drivers(uint8_t out);
 
     /// Sends the requested byte out of the low side driver 1 (pin 23 on the Cargo Bay Connector).
-    /// low side driver 1 can be used to drive an IR transmitter to send commands to other Roombas and Creates. 
+    /// low side driver 1 can be used to drive an IR transmitter to send commands to other Roombas and Creates.
     /// Create only. No equivalent on Roomba.
     /// \param[in] data Data byte to transmit
     void sendIR(uint8_t data);
 
     /// Defines a song which can later be played with playSong()
     /// \param[in] songNumber Song number for this song. 0 to 15
-    /// \param[in] notes Array of note/duration pairs. See Open Interface manual for details. 2 bytes per note, 
+    /// \param[in] notes Array of note/duration pairs. See Open Interface manual for details. 2 bytes per note,
     /// first byte is the note and the second is the duration
     /// \param[in] len Length of notes array in bytes, so this will be twice the number of notes in the song
     void song(uint8_t songNumber, const uint8_t* notes, int len);
@@ -509,14 +529,14 @@ public:
     /// \param[in] command One of Roomba::StreamCommand
     void streamCommand(StreamCommand command);
 
-    /// Defines a command script which can later be executed with playScript(). You can clear the script by calling 
+    /// Defines a command script which can later be executed with playScript(). You can clear the script by calling
     /// script(NULL, 0);
     /// Create only. No equivalent on Roomba.
     /// \param[in] script Array containing a sequence of Roomba OI commands.
     /// \param[in] len Length of the script in bytes.
     void script(const uint8_t* script, uint8_t len);
 
-    /// Executes a previously defined script, 
+    /// Executes a previously defined script,
     /// the last one specified by script()
     /// Create only. No equivalent on Roomba.
     void playScript();
@@ -527,8 +547,8 @@ public:
     /// \param[in] ticks The number of ticks to wait. Each tick is 15ms
     void wait(uint8_t ticks);
 
-    /// Causes Roomba to wait until it has travelled the distance specified. 
-    /// Roomba will not react to any inputs until the wait has completed. 
+    /// Causes Roomba to wait until it has travelled the distance specified.
+    /// Roomba will not react to any inputs until the wait has completed.
     /// Note that this does not cause the host arduino to wait, it only sends the wait comman to the Roomba
     /// This command is intended for use in scripting only.
     /// Create only. No equivalent on Roomba.
@@ -536,7 +556,7 @@ public:
     void waitDistance(int16_t mm);
 
     /// Causes Roomba to wait until it has rotated through the specified angle.
-    /// Roomba will not react to any inputs until the wait has completed. 
+    /// Roomba will not react to any inputs until the wait has completed.
     /// Note that this does not cause the host arduino to wait, it only sends the wait comman to the Roomba
     /// This command is intended for use in scripting only.
     /// Create only. No equivalent on Roomba.
@@ -544,7 +564,7 @@ public:
     void waitAngle(int16_t degrees);
 
     /// Cause the Create to wait for a specified event.
-    /// Roomba will not react to any inputs until the wait has completed. 
+    /// Roomba will not react to any inputs until the wait has completed.
     /// Note that this does not cause the host arduino to wait, it only sends the wait comman to the Roomba
     /// Create only. No equivalent on Roomba.
     /// \param[in] type Event type to wait for. One of Roomba::EventType
@@ -554,24 +574,24 @@ public:
     /// Blocks untill all len bytes are read or a read timeout occurs.
     /// \param[out] dest Destination where the read data is stored. Must have at least len bytes available.
     /// \param[in] len Number of bytes to read
-    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout 
+    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout
     /// on reading any byte.
     bool getData(uint8_t* dest, uint8_t len);
 
-    /// Reads the sensor data for the specified sensor packet ID. Note that different sensor packets have 
-    /// different lengths, and it is the callers responsibilty to make sure len agrees with the expected 
+    /// Reads the sensor data for the specified sensor packet ID. Note that different sensor packets have
+    /// different lengths, and it is the callers responsibilty to make sure len agrees with the expected
     /// length of the sensor data. See the Open Interface manual for details on sensor packet lengths.
     /// Roomba.h defines various enums and defines for decoding sensor data.
     /// Blocks untill all len bytes are read or a read timeout occurs.
     /// \param[in] packetID The ID of the sensor packet to read from Roomba::Sensor
     /// \param[out] dest Destination where the read data is stored. Must have at least len bytes available.
     /// \param[in] len Number of sensor data bytes to read
-    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout 
+    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout
     /// on reading any byte.
     bool getSensors(uint8_t packetID, uint8_t* dest, uint8_t len);
 
-    /// Reads the sensor data for the specified set of sensor packet IDs. Note that different sensor packets have 
-    /// different lengths, and it is the callers responsibilty to make sure len agrees with the expected 
+    /// Reads the sensor data for the specified set of sensor packet IDs. Note that different sensor packets have
+    /// different lengths, and it is the callers responsibilty to make sure len agrees with the expected
     /// length of the sensor data. See the Open Interface manual for details on sensor packet lengths.
     /// Blocks until all len bytes are read or a read timeout occurs.
     /// Create only. No equivalent on Roomba.
@@ -579,15 +599,15 @@ public:
     /// \param[in] numPacketIDs number of IDs in the packetIDs array
     /// \param[out] dest Destination where the read data is stored. Must have at least len bytes available.
     /// \param[in] len Number of sensor data bytes to read and store to dest.
-    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout 
+    /// \return true if all len bytes were successfully read. Returns false in the case of a timeout
     /// on reading any byte.
     bool getSensorsList(uint8_t* packetIDs, uint8_t numPacketIDs, uint8_t* dest, uint8_t len);
 
     /// Polls the serial input for data belonging to a sensor data stream previously requested with stream().
-    /// As sensor data is read it is appended to dest until at most len bytes are stored there. 
-    /// When a complete sensor stream has been read with a correct checksum, returns true. 
+    /// As sensor data is read it is appended to dest until at most len bytes are stored there.
+    /// When a complete sensor stream has been read with a correct checksum, returns true.
     /// See the Open Interface manual for details on how the sensor data will be encoded in dest.
-    /// Discards characters that are not part of a stream, such as the messages the Roomba 
+    /// Discards characters that are not part of a stream, such as the messages the Roomba
     /// sends at startup and while charging.
     /// Create only. No equivalent on Roomba.
     /// \param[out] dest Destination where the read data is stored. Must have at least len bytes available.
@@ -601,10 +621,10 @@ public:
     /// \param[out] dest Destination where the read data is stored. Must have at least len bytes available.
     /// \param[in] len The maximum number of bytes to place in dest. If the script is actually longer than len
     /// only len bytes will be written
-    /// \return The actual number of bytes in the script, even if this is more than len. By calling 
+    /// \return The actual number of bytes in the script, even if this is more than len. By calling
     /// getScript(NULL, 0), you can determine how many bytes would be required to store the script.
     uint8_t getScript(uint8_t* dest, uint8_t len);
-  
+
 private:
     /// \enum PollState
     /// Values for _pollState
@@ -618,10 +638,10 @@ private:
 
     /// The baud rate to use for the serial port
     uint32_t        _baud;
-	
+
     /// The serial port to use to talk to the Roomba
     HardwareSerial* _serial;
-    
+
     /// Variables for keeping track of polling of data streams
     uint8_t         _pollState; /// Current state of polling, one of Roomba::PollState
     uint8_t         _pollSize;  /// Expected size of the data stream in bytes

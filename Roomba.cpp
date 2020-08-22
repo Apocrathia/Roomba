@@ -12,7 +12,7 @@ Roomba::Roomba(HardwareSerial* serial, Baud baud)
   _pollState = PollStateIdle;
 }
 
-// Resets the 
+// Resets the
 void Roomba::reset()
 {
     _serial->write(7);
@@ -135,6 +135,24 @@ void Roomba::leds(uint8_t leds, uint8_t powerColour, uint8_t powerIntensity)
   _serial->write(powerIntensity);
 }
 
+void Roomba::digitLedsRaw(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0)
+{
+  _serial->write(163);
+  _serial->write(digit3);
+  _serial->write(digit2);
+  _serial->write(digit1);
+  _serial->write(digit0);
+}
+
+void Roomba::digitLedsASCII(uint8_t digit3, uint8_t digit2, uint8_t digit1, uint8_t digit0)
+{
+  _serial->write(164);
+  _serial->write(digit3);
+  _serial->write(digit2);
+  _serial->write(digit1);
+  _serial->write(digit0);
+}
+
 void Roomba::digitalOut(uint8_t out)
 {
   _serial->write(147);
@@ -178,7 +196,7 @@ void Roomba::song(uint8_t songNumber, const uint8_t* data, int len)
 void Roomba::playSong(uint8_t songNumber)
 {
   _serial->write(141);
-  _serial->write(songNumber); 
+  _serial->write(songNumber);
 }
 
 // Start a stream of sensor data with the specified packet IDs in it
@@ -346,4 +364,3 @@ uint8_t Roomba::getScript(uint8_t* dest, uint8_t len)
 
   return count;
 }
-
